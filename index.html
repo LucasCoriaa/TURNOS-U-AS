@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Turnos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="brand" href="#">
+        <div class="brand-icon" id="brand-icon">📅</div>
+        <div>
+          <div class="brand-name" id="brand-name">Turnos</div>
+          <div class="brand-cat"  id="brand-cat"></div>
+        </div>
+      </a>
+      <div class="header-actions">
+        <div class="biz-selector-wrap hidden" id="biz-selector-wrap">
+          <button class="biz-selector-btn" id="biz-selector-btn">
+            <span class="biz-emoji" id="biz-sel-emoji">📅</span>
+            <span class="biz-label" id="biz-sel-label">Elegir negocio</span>
+            <span class="chevron">▼</span>
+          </button>
+          <div class="biz-dropdown hidden" id="biz-dropdown"></div>
+        </div>
+        <button class="btn btn-ghost" id="btn-open-admin">⚙ Admin</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-wrap">
+
+    <section class="hero">
+      <span class="hero-eyebrow" id="hero-eyebrow">📅 Reservas online</span>
+      <h1 class="hero-title"    id="hero-title">Reservá tu turno</h1>
+      <p  class="hero-subtitle" id="hero-subtitle">Seleccioná un servicio, fecha y horario.</p>
+    </section>
+
+    <section class="step-section" id="step-service">
+      <div class="step-header">
+        <div class="step-badge">1</div>
+        <h2 class="step-title">Elegí un servicio</h2>
+      </div>
+      <div class="services-grid" id="services-grid"></div>
+    </section>
+
+    <section class="step-section hidden" id="step-datetime">
+      <div class="step-header">
+        <div class="step-badge">2</div>
+        <h2 class="step-title">Elegí fecha y hora</h2>
+      </div>
+      <div class="date-picker-wrap">
+        <label class="field-label" for="date-input">Fecha</label>
+        <input type="date" id="date-input" class="field-input" />
+      </div>
+      <p class="slots-hint" id="slots-hint">Seleccioná una fecha para ver los turnos disponibles.</p>
+      <div class="slots-grid" id="slots-grid"></div>
+    </section>
+
+    <section class="step-section hidden" id="step-form">
+      <div class="step-header">
+        <div class="step-badge">3</div>
+        <h2 class="step-title">Tus datos</h2>
+      </div>
+      <div class="selection-pills" id="selection-pills"></div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="field-group">
+            <label class="field-label" for="inp-name">Nombre *</label>
+            <input type="text"  id="inp-name"  class="field-input" placeholder="Tu nombre" />
+            <span class="field-error hidden" id="err-name">⚠ Ingresá tu nombre</span>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="inp-phone">Teléfono *</label>
+            <input type="tel"   id="inp-phone" class="field-input" placeholder="351 123 4567" />
+            <span class="field-error hidden" id="err-phone">⚠ Teléfono inválido</span>
+          </div>
+          <div class="field-group full">
+            <label class="field-label" for="inp-email">Email <span class="optional-tag">(opcional)</span></label>
+            <input type="email" id="inp-email" class="field-input" placeholder="tu@email.com" />
+          </div>
+          <div class="field-group full">
+            <label class="field-label" for="inp-notes">Notas <span class="optional-tag">(opcional)</span></label>
+            <textarea id="inp-notes" class="field-input" placeholder="Algo que quieras aclararnos…"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg" id="btn-confirm">Confirmar turno →</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Modal confirmación -->
+  <div class="modal-overlay hidden" id="modal-confirm">
+    <div class="modal-card">
+      <div class="modal-ring">✓</div>
+      <h2 class="modal-title">¡Turno confirmado!</h2>
+      <p  class="modal-sub">Te esperamos. ¡Hasta pronto!</p>
+      <div class="modal-detail-card" id="modal-details"></div>
+      <div class="modal-actions">
+        <a class="btn-whatsapp" id="btn-whatsapp" href="#" target="_blank">📲 Enviar por WhatsApp</a>
+        <button class="btn btn-ghost" id="btn-new-booking">Hacer otra reserva</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel admin -->
+  <div class="admin-overlay hidden" id="admin-overlay">
+    <div class="admin-drawer">
+      <div class="drawer-header">
+        <h2 class="drawer-title">Administración</h2>
+        <button class="drawer-close" id="btn-close-admin">✕</button>
+      </div>
+      <div class="drawer-tabs">
+        <button class="drawer-tab active" data-tab="bookings">Turnos</button>
+        <button class="drawer-tab"        data-tab="services">Servicios</button>
+        <button class="drawer-tab"        data-tab="stats">Estadísticas</button>
+      </div>
+
+      <!-- Tab Turnos -->
+      <div class="drawer-body" id="tab-bookings">
+        <div class="filter-row">
+          <div class="field-group" style="flex:1">
+            <label class="field-label" for="admin-date-filter">Filtrar por fecha</label>
+            <input type="date" id="admin-date-filter" class="field-input" />
+          </div>
+          <button class="btn btn-ghost" id="btn-clear-filter" style="flex-shrink:0">Ver todos</button>
+        </div>
+        <p id="admin-count" style="font-size:12px;color:var(--text-muted);font-weight:600"></p>
+        <div id="admin-list"></div>
+        <button class="btn btn-danger" id="btn-delete-all" style="margin-top:auto">🗑 Borrar todos los turnos</button>
+      </div>
+
+      <!-- Tab Servicios -->
+      <div class="drawer-body hidden" id="tab-services">
+        <p class="section-label">Servicios activos</p>
+        <div class="service-list-admin" id="admin-service-list"></div>
+        <p class="section-label" style="margin-top:6px">Agregar servicio</p>
+        <div class="add-service-form">
+          <div class="add-service-grid">
+            <div class="field-group">
+              <label class="field-label">Ícono (emoji)</label>
+              <input type="text"   id="ns-icon"     class="field-input" placeholder="💈" maxlength="2" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Nombre</label>
+              <input type="text"   id="ns-name"     class="field-input" placeholder="Corte" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Duración (min)</label>
+              <input type="number" id="ns-duration" class="field-input" placeholder="30" min="5" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">Precio ($)</label>
+              <input type="number" id="ns-price"    class="field-input" placeholder="2500" min="0" />
+            </div>
+          </div>
+          <button class="btn btn-primary" id="btn-add-service">+ Agregar servicio</button>
+        </div>
+      </div>
+
+      <!-- Tab Stats -->
+      <div class="drawer-body hidden" id="tab-stats">
+        <div class="stat-grid" id="stats-grid"></div>
+        <div id="stats-breakdown" style="margin-top:8px"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="config.js?v=4"></script>
+  <script src="db.js?v=4"></script>
+  <script src="app.js?v=4"></script>
+</body>
+</html>
