@@ -5,7 +5,7 @@ const WHITE_LABEL = {
   },
   activeBusinessId: "biz_003", // null = multi-negocio
   app: {
-    whatsappNumber: '5493513824513',
+    whatsappNumber: '5493512676300',
     maxAdvanceDays: 30,
     showPrices:     true,
     showDuration:   true,
